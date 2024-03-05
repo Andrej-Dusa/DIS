@@ -5,10 +5,13 @@ public class Generator implements IGenerator {
     protected double max;
     protected double deltaMinMax;
     protected double seed;
+
+    protected Random generatorOfSeeds;
     protected Random random;
 
     public Generator()  {
         random = new Random();
+        generatorOfSeeds = new Random();
         min = 0;
         max = 1;
         deltaMinMax = max - min;
@@ -19,6 +22,7 @@ public class Generator implements IGenerator {
         this.max = max;
         deltaMinMax = max - min;
         random = new Random();
+        generatorOfSeeds = new Random();
     }
 
     public Generator(double min, double max, double seed) {
@@ -27,7 +31,12 @@ public class Generator implements IGenerator {
         this.seed = seed;
         deltaMinMax = max - min;
         random = new Random();
-        random.setSeed((long)seed);
+        generatorOfSeeds.setSeed((long)seed);
+        random.setSeed(generatorOfSeeds.nextLong());
+    }
+
+    public void setSeed(double seed) {
+        this.seed = seed;
     }
 
     public double nextNumber() {
