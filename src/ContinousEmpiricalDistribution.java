@@ -2,11 +2,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ContinousEmpiricalDistribution extends Generator{
-    private ArrayList<Random> listOfGenerators;
-
-    private ArrayList<Double> minsOfGenerators;
-    private ArrayList<Double> maxsOfGenerators;
-    private ArrayList<Double> probabilitiesOfGenerators;
+    private ArrayList<Random> listOfGenerators = new ArrayList<Random>();
+    private ArrayList<Double> minsOfGenerators = new ArrayList<Double>();
+    private ArrayList<Double> maxsOfGenerators= new ArrayList<Double>();
+    private ArrayList<Double> probabilitiesOfGenerators = new ArrayList<Double>();
 
     public ContinousEmpiricalDistribution() {
         super();
@@ -39,21 +38,25 @@ public class ContinousEmpiricalDistribution extends Generator{
     }
 
     public ContinousEmpiricalDistribution(double... params) {
+        random = new Random();
+        generatorOfSeeds = new Random();
+        generatorOfSeeds.setSeed((long)params[0]);
+        random.setSeed(generatorOfSeeds.nextLong());
         double minValue = 0.0;
         double maxValue = 0.0;
         double probability = 0.0;
         double sumProbability = 0.0;
-        for (int i = 0; i < params.length ; i++) {
+        for (int i = 1; i < params.length ; i++) {
             switch (i % 3) {
-                case 0 :
+                case 1 :
                     minValue = params[i];
                     minsOfGenerators.add(minValue);
                     break;
-                case 1:
+                case 2:
                     maxValue = params[i];
                     maxsOfGenerators.add(maxValue);
                     break;
-                case 2:
+                case 0:
                     probability = params[i];
                     sumProbability += probability;
                     Random newRandom = new Random();
@@ -68,6 +71,11 @@ public class ContinousEmpiricalDistribution extends Generator{
             System.out.println("Sucet pravdepodobnosti musi byt rovny 1!!!");
         }
 
+    }
+
+    @Override
+    public void setSeed(double seed) {
+        super.setSeed(seed);
     }
 
     @Override
