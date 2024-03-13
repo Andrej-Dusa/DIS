@@ -43,4 +43,8 @@ public class Generator implements IGenerator {
     public double nextNumber() {
         return random.nextDouble(deltaMinMax) + min;
     }
+
+    public void setGeneratorOfSeeds(Random generatorOfSeeds) {
+        this.generatorOfSeeds = generatorOfSeeds;
+    }
 }
