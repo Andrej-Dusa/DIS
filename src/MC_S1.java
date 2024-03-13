@@ -5,8 +5,8 @@ public class MC_S1 extends Simulation{
     private DiscreteUniformDistribution dUD;
     private ContinousEmpiricalDistribution cED;
     private ContinousUniformDistribution cUD;
-    private double sum;
-    private int numberOfRunnedReplications;
+    protected double sum;
+    protected int numberOfRanReplications;
     Random seedGenerator;
     public MC_S1() {
         seedGenerator = new Random();
@@ -18,22 +18,20 @@ public class MC_S1 extends Simulation{
 
     @Override
     void beforeReplications() {
-        numberOfRunnedReplications = 0;
+        numberOfRanReplications = 0;
         sum = 0;
     }
 
     @Override
     void afterReplications() {
-        System.out.println(numberOfRunnedReplications + " : " + sum/numberOfRunnedReplications);
+        System.out.println(numberOfRanReplications + " : " + sum/ numberOfRanReplications);
     }
 
     @Override
     void simulate() {
-        double interest = 0.0;
-        double years = 10.0;
         double HU = 100000;
 
-        interest = dUD.nextNumber() * 0.01;
+        double interest = dUD.nextNumber() * 0.01;
         double monthlyPayment = countMonthlyPayment(10, interest, HU);
         sum += monthlyPayment * 5 * 12;
         double principalBalance = countPrincipalBalance(10, 5, interest, HU);
@@ -57,8 +55,7 @@ public class MC_S1 extends Simulation{
         principalBalance = countPrincipalBalance(1, 1, interest, HU);
         HU = principalBalance;
 
-        numberOfRunnedReplications++;
-        //System.out.println(numberOfRunnedReplications + " : " + sum/numberOfRunnedReplications);
+        numberOfRanReplications++;
     }
 
     public double countMonthlyPayment(double years, double interest, double HU) {

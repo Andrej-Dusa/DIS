@@ -17,7 +17,10 @@ public class Main {
 //            System.out.println((i + 1) + ": " + disCE.nextNumber());
 //        }
         MC_S1 strategia1 = new MC_S1();
-        strategia1.runSimulation(100000);
+        //strategia1.runSimulation(100000);
+
+        MC_S2 strategia2 = new MC_S2();
+        strategia2.runSimulation(100000000);
 
     }
 }
