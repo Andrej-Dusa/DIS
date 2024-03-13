@@ -20,7 +20,9 @@ public class Main {
         //strategia1.runSimulation(100000);
 
         MC_S2 strategia2 = new MC_S2();
-        strategia2.runSimulation(100000000);
+        //strategia2.runSimulation(100000000);
 
+        MC_S3 strategia3 = new MC_S3();
+        strategia3.runSimulation(100000000);
     }
 }
