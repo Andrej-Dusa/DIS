@@ -37,6 +37,8 @@ public class ContinousEmpiricalDistribution extends Generator{
         listOfGenerators.add(newRandom);
     }
 
+    //first parameter is always seed, rest in order that can repeat any number of times are min value of generated number
+    //max value of generated number and last parameter in repetition is probability with which should generator generate
     public ContinousEmpiricalDistribution(double... params) {
         random = new Random();
         generatorOfSeeds = new Random();
