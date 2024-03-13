@@ -36,6 +36,16 @@ public class Generator implements IGenerator {
         random.setSeed(generatorOfSeeds.nextLong());
     }
 
+    public Generator(double min, double max, Random seedGenerator) {
+        this.min = min;
+        this.max = max;
+        this.seed = seed;
+        deltaMinMax = max - min;
+        random = new Random();
+        generatorOfSeeds = seedGenerator;
+        random.setSeed(generatorOfSeeds.nextLong());
+    }
+
     public void setSeed(double seed) {
         this.seed = seed;
     }

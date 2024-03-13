@@ -73,6 +73,41 @@ public class ContinousEmpiricalDistribution extends Generator{
 
     }
 
+    public ContinousEmpiricalDistribution(Random seedGenerator,double... params) {
+        random = new Random();
+        generatorOfSeeds = seedGenerator;
+        random.setSeed(generatorOfSeeds.nextLong());
+        double minValue = 0.0;
+        double maxValue = 0.0;
+        double probability = 0.0;
+        double sumProbability = 0.0;
+        for (int i = 0; i < params.length ; i++) {
+            switch (i % 3) {
+                case 0 :
+                    minValue = params[i];
+                    minsOfGenerators.add(minValue);
+                    break;
+                case 1:
+                    maxValue = params[i];
+                    maxsOfGenerators.add(maxValue);
+                    break;
+                case 2:
+                    probability = params[i];
+                    sumProbability += probability;
+                    Random newRandom = new Random();
+                    newRandom.setSeed(generatorOfSeeds.nextLong());
+                    listOfGenerators.add(newRandom);
+                    probabilitiesOfGenerators.add(sumProbability);
+                    break;
+            }
+        }
+
+        if (1 - sumProbability > 0.00001) {
+            System.out.println("Sucet pravdepodobnosti musi byt rovny 1!!!");
+        }
+
+    }
+
     @Override
     public void setSeed(double seed) {
         super.setSeed(seed);

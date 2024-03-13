@@ -13,6 +13,10 @@ public class DiscreteUniformDistribution extends Generator{
         super(min, max, seed);
     }
 
+    public DiscreteUniformDistribution(double min, double max, Random seedGenerator) {
+        super(min, max, seedGenerator);
+    }
+
     @Override
     public void setSeed(double seed) {
         super.setSeed(seed);

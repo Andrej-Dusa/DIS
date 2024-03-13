@@ -11,9 +11,9 @@ public class MC_S1 extends Simulation{
     public MC_S1() {
         seedGenerator = new Random();
         seedGenerator.setSeed(1);
-        dUD = new DiscreteUniformDistribution(1,4, seedGenerator.nextDouble());
-        cED = new ContinousEmpiricalDistribution(seedGenerator.nextDouble(),0.1, 0.3, 0.1, 0.3,0.8,0.35,0.8,1.2,0.2,1.2,2.5,0.15,2.5,3.8,0.15,3.8,4.8,0.05);
-        cUD = new ContinousUniformDistribution(0.3,5, seedGenerator.nextDouble());
+        dUD = new DiscreteUniformDistribution(1,4, seedGenerator);
+        cED = new ContinousEmpiricalDistribution(seedGenerator,0.1, 0.3, 0.1, 0.3,0.8,0.35,0.8,1.2,0.2,1.2,2.5,0.15,2.5,3.8,0.15,3.8,4.8,0.05);
+        cUD = new ContinousUniformDistribution(0.9,2.2, seedGenerator);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class MC_S1 extends Simulation{
 
     @Override
     void afterReplications() {
-
+        System.out.println(numberOfRunnedReplications + " : " + sum/numberOfRunnedReplications);
     }
 
     @Override
@@ -58,21 +58,18 @@ public class MC_S1 extends Simulation{
         HU = principalBalance;
 
         numberOfRunnedReplications++;
-        System.out.println(numberOfRunnedReplications + " : " + sum/numberOfRunnedReplications);
+        //System.out.println(numberOfRunnedReplications + " : " + sum/numberOfRunnedReplications);
     }
 
     public double countMonthlyPayment(double years, double interest, double HU) {
         double monthlyInterest = interest / 12.0;
-        double result = HU * monthlyInterest * Math.pow(1 + monthlyInterest, years * 12.0);
-        result /= Math.pow(1 + monthlyInterest, years * 12.0) - 1;
+        double result = (HU * monthlyInterest * Math.pow(1 + monthlyInterest, years * 12.0))/(Math.pow(1 + monthlyInterest, years * 12.0) - 1);
         return result;
     }
 
     public double countPrincipalBalance(double years, double yearsPayed, double interest, double HU) {
         double monthlyInterest = interest / 12.0;
-        double result = Math.pow(1 + monthlyInterest, years * 12) - Math.pow(1 + monthlyInterest, yearsPayed * 12.0);
-        result /= Math.pow(1 + monthlyInterest, years * 12) - 1;
-        result *= HU;
+        double result = HU *((Math.pow(1 + monthlyInterest, years * 12) - Math.pow(1 + monthlyInterest, yearsPayed * 12.0))/(Math.pow(1 + monthlyInterest, years * 12) - 1));
         return  result;
     }
 }

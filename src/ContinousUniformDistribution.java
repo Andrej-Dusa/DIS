@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class ContinousUniformDistribution extends Generator{
     public ContinousUniformDistribution() {
         super();
@@ -9,6 +11,10 @@ public class ContinousUniformDistribution extends Generator{
 
     public ContinousUniformDistribution(double min, double max, double seed) {
         super(min, max, seed);
+    }
+
+    public ContinousUniformDistribution(double min, double max, Random seedGenerator) {
+        super(min, max, seedGenerator);
     }
 
     @Override
