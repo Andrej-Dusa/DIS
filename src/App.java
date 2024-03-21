@@ -14,6 +14,7 @@ public class App extends JFrame {
     private JComboBox strategiaComboBox;
     private JButton startButton;
     private JButton pauseButton;
+    private JPanel chartPanel;
     private Thread simulationThread;
 
 
@@ -21,7 +22,11 @@ public class App extends JFrame {
         this.setContentPane(panelMain);
         this.setTitle("Monte Carlo");
         this.setSize(400, 200);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+
         this.setVisible(true);
 
 
@@ -29,13 +34,22 @@ public class App extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int strategy = Integer.parseInt(strategiaComboBox.getSelectedItem().toString());
-                int numberOfReplications = Integer.parseInt(replicationsTextField.getText());
+                double numberOfReplications = Double.parseDouble(replicationsTextField.getText());
+                int addToChart = 1;
+
+                if (numberOfReplications * 0.7 > 1000 ) {
+                    addToChart = (int) ((numberOfReplications * 0.7) / 1000);
+                }
+
                 if (strategy == 1) {
                     MC_S1 mc_s1 = new MC_S1();
+                    mc_s1.setChartPanel(chartPanel);
+                    mc_s1.setAddToChart(addToChart);
+                    mc_s1.setAllReplications((int)numberOfReplications);
                     simulationThread = new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            mc_s1.runSimulation(numberOfReplications);
+                            mc_s1.runSimulation((int)numberOfReplications);
                         }
                     });
                     simulationThread.start();

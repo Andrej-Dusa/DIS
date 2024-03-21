@@ -1,5 +1,6 @@
-import org.jfree.data.general.Series;
+import org.jfree.data.xy.XYSeries;
 
+import javax.swing.*;
 import java.util.Random;
 
 public class MC_S1 extends Simulation{
@@ -8,10 +9,13 @@ public class MC_S1 extends Simulation{
     private ContinousEmpiricalDistribution cED;
     private ContinousUniformDistribution cUD;
     protected double sum;
+    protected double addToChart;
     protected int numberOfRanReplications;
-    protected Series series;
-
+    protected int allReplications;
+    protected XYSeries series;
+    protected JPanel chartPanel;
     protected boolean running;
+    protected Object pauseLock = new Object();
     Random seedGenerator;
     public MC_S1() {
         seedGenerator = new Random();
@@ -61,6 +65,24 @@ public class MC_S1 extends Simulation{
         HU = principalBalance;
 
         numberOfRanReplications++;
+        if (numberOfRanReplications > allReplications * 0.3 && numberOfRanReplications % addToChart == 0) {
+            series.add(numberOfRanReplications, sum / numberOfRanReplications);
+
+        }
+
+        synchronized (pauseLock) {
+            while (!running) {
+                try {
+                    pauseLock.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        SwingUtilities.invokeLater(() -> {
+            chartPanel.revalidate();
+            chartPanel.repaint();
+        });
     }
 
     public double countMonthlyPayment(double years, double interest, double HU) {
@@ -83,7 +105,19 @@ public class MC_S1 extends Simulation{
         return running;
     }
 
-    public void setSeries(Series series) {
+    public void setSeries(XYSeries series) {
         this.series = series;
+    }
+
+    public void setChartPanel(JPanel chartPanel) {
+        this.chartPanel = chartPanel;
+    }
+
+    public void setAddToChart(double addToChart) {
+        this.addToChart = addToChart;
+    }
+
+    public void setAllReplications(int allReplications) {
+        this.allReplications = allReplications;
     }
 }
