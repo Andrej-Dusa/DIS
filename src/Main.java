@@ -1,3 +1,5 @@
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
 //        DiscreteUniformDistribution disDU = new DiscreteUniformDistribution(1,4, 1);
@@ -23,6 +25,10 @@ public class Main {
         //strategia2.runSimulation(100000000);
 
         MC_S3 strategia3 = new MC_S3();
-        strategia3.runSimulation(100000000);
+        //strategia3.runSimulation(100000000);
+
+        SwingUtilities.invokeLater(() -> {
+            App app = new App();
+        });
     }
 }
