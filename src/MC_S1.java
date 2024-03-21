@@ -1,3 +1,5 @@
+import org.jfree.data.general.Series;
+
 import java.util.Random;
 
 public class MC_S1 extends Simulation{
@@ -7,6 +9,9 @@ public class MC_S1 extends Simulation{
     private ContinousUniformDistribution cUD;
     protected double sum;
     protected int numberOfRanReplications;
+    protected Series series;
+
+    protected boolean running;
     Random seedGenerator;
     public MC_S1() {
         seedGenerator = new Random();
@@ -68,5 +73,17 @@ public class MC_S1 extends Simulation{
         double monthlyInterest = interest / 12.0;
         double result = HU *((Math.pow(1 + monthlyInterest, years * 12) - Math.pow(1 + monthlyInterest, yearsPayed * 12.0))/(Math.pow(1 + monthlyInterest, years * 12) - 1));
         return  result;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setSeries(Series series) {
+        this.series = series;
     }
 }
